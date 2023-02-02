@@ -6,33 +6,32 @@ class Solution {
      * @return Boolean
      */
     function isAlienSorted($words, $order) {
-	$ordArr = [];
-	//build a hashmap to lookup order of character
-	for ($i = 0; $i < 26; $i++) {
-		$ordArr[$order[$i]] = $i;
-	}
-
-	$s = count($words);
-
-	for ($i = 1; $i < $s; ++$i) {
-		if (!$this->compare($words[$i-1], $words[$i], $ordArr)) {
-			return false;
-		}
-	}
-	return true;
-}
-
-function compare($str1, $str2, &$ordArr) { //returns true for 'abc' and 'abcd' | 'abc' and 'x'
-	$l1 = strlen($str1);
-	$l2 = strlen($str2);
-
-	for ($i = 0; $i < min($l1, $l2); ++$i) {
-		if ($ordArr[$str1[$i]] < $ordArr[$str2[$i]]) {
-			return true;
-		} elseif ($ordArr[$str1[$i]] > $ordArr[$str2[$i]]) {
-			return false;
-		}
-	}
-	return $l2 > $l1;
-}
+        $wordCount = count($words);
+        $orderArr = str_split($order);
+        //loop to pcik word
+        for($i=0;$i<$wordCount-1;$i++){
+            //loop to compare with the next word
+            for($j=$i+1;$j<$wordCount;$j++){
+                $strt = 0;
+                $cnt1 = strlen($words[$i]);
+                $cnt2 = strlen($words[$j]);
+                while($strt < $cnt1 || $strt<$cnt2){
+                    if($words[$i][$strt] != $words[$j][$strt]){
+                      if(array_search($words[$i][$strt],$orderArr) > array_search($words[$j][$strt],$orderArr) || $words[$j][$strt]=="")
+                            return false;
+                      else
+                            break;
+                    }
+                    $strt++;
+                }
+            }
+        }
+        return true;
+     
+        
+        
+   
+        
+        
+    }
 }
