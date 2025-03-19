@@ -1,18 +1,26 @@
 class Solution {
-    func minOperations(_ nums: [Int]) -> Int {
-        var nums = nums  // Create a mutable copy
-        var count = 0
-        let n = nums.count
 
-        for i in 0..<n-2 {
-            if nums[i] == 0 {
-                nums[i] ^= 1
-                nums[i + 1] ^= 1
-                nums[i + 2] ^= 1
-                count += 1
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function minOperations($nums) {
+        $n = count($nums);
+        $flips = 0;
+    
+        for ($i = 0; $i <= $n - 3; $i++) {
+            if ($nums[$i] == 0) {
+                for ($j = 0; $j < 3; $j++) {
+                    $nums[$i + $j] ^= 1;
+                }
+                $flips++;
             }
         }
-
-        return (nums[n - 2] == 1 && nums[n - 1] == 1) ? count : -1
+    
+        foreach ($nums as $num) {
+            if ($num == 0) return -1;
+        }
+    
+        return $flips;          
     }
 }
